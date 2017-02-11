@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script> 
+    <script>
+      $(function(){
+        console.log("Translate Widget start");
+        //$('#translate-form').on('submit', function(e) { 
+          //e.preventDefault();  
+          //console.log("Submitting");
+        //});
+      });
+    </script>
+    <style>
+      textarea{
+        width: 99%;
+        height: 200px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>  
+<form id="translate-form" action="translate-widget" method="post">    
+  <label>From:</label>
+  <select id="from" name="from">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+    <option value="ar">Arabic</option>
+    <option value="pt">Portuguese</option>
+    <option value="fr">French</option>
+  </select>
+  
+  <label>To:</label>
+  <select id="to" name="to">
+    <option value="en">English</option>
+    <option value="es">Spanish</option>
+    <option value="ar">Arabic</option>
+    <option value="pt">Portuguese</option>
+    <option value="fr">French</option>
+  </select>
+  
+  <div>
+    <textarea id="text" name="text">
+    </textarea>
+  </div>
+  
+  <input type="submit" value="Translate">
+</form>  
+</body>
+</html>

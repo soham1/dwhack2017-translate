@@ -60,4 +60,31 @@ router.get('/config', function(req, res, next) {
   res.send('Thank you for installing the app!');
 });
 
+router.get('/translate-widget', function(req, res, next) {
+  res.render("translate-widget.ejs");
+});
+
+router.post('/translate-widget', function(req, res, next) {
+  console.log(req.body);
+  var conversion = req.body.from + "-" + req.body.to + "-conversational";
+  var translate_params = {
+        'X-WDC-PL-OPT-OUT': '0',
+        model_id: conversion,
+        text: req.body.text
+  };
+  req.watson.translator.translate(translate_params, function(err, models) {
+        if (err) {
+          res.json({
+            "text": "Please enter language followed by text."
+          });
+        }
+        else {
+          console.log(req.flock);
+            res.render("translate-response.ejs", {
+            "text": models.translations[0].translation 
+          });
+        }
+      });
+});
+
 module.exports = router;

@@ -1,0 +1,12 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
+<script src="/javascripts/flock.js"></script>
+<script>
+    $(function(){
+       $("#send").on("click", function(e){
+           console.log("Clicked button");
+           flock.close(); 
+       });
+    })
+</script>
+<p><%=text%></p>
+<button id="send">Send</button>
