@@ -11,8 +11,8 @@ var watson = require('./watson');
 
 var flock = require('flockos');
 
-flock.setAppId('3a805bd2-0714-4a00-b491-cb10469858b3');
-flock.setAppSecret('b9538dd7-bcae-4221-97a6-a3805214009a');
+flock.setAppId('6ed0a008-7b8d-41df-965d-9920afafb7f4');
+flock.setAppSecret('fcf5fb61-c220-425f-9fca-72fc74985cdd');
 
 var app = express();
 
@@ -39,6 +39,8 @@ app.use(function(req, res, next) {
 
 app.use('/', index);
 app.use('/flock', flockRoute);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

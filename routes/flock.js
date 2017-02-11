@@ -1,25 +1,63 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
 router.post('/event', function(req, res, next) {
-  console.log(req.body);
-  res.send('/flock/event called');
+  console.log("Request body", req.body);
+  console.log("Token", res.locals);
+  if (req.body.name == "client.slashCommand") {
+    try {
+      var languages = {
+        french: "en-fr-conversational",
+        arabic: "en-ar-conversational",
+        spanish: "en-es-conversational",
+        portuguese: "en-pt-conversational"
+      };
+      var text = req.body.text;
+      var splitted = text.split(" ");
+      var language = splitted[0].toLowerCase();
+      splitted.shift();
+      var text_final = splitted.join(" ");
+      var translate_params = {
+        'X-WDC-PL-OPT-OUT': '0',
+        model_id: languages[language],
+        text: text_final
+      };
+      req.watson.translator.translate(translate_params, function(err, models) {
+        if (err) {
+          res.json({
+            "text": "Please enter language followed by text."
+          });
+        }
+        else {
+          req.flock.callMethod('chat.sendMessage', res.locals.appId, {
+            to: res.locals.userId,
+            text: models.translations[0].translation
+          }, function(error, response) {
+            if (!error) {
+              console.log(response);
+            }
+          });
+
+          res.json({
+            "text": models.translations[0].translation
+          });
+        }
+      });
+    }
+    catch (exception) {
+      console.log(exception);
+    }
+  }
+  else {
+    res.json({
+      "text": "Please enter language followed by text."
+    });
+  }
 });
 
 router.get('/config', function(req, res, next) {
-  console.log(req.body);
-  res.send('Thank you for installoing the app!');
-});
-
-router.get('/t2s', function(req, res, next) {
-  console.log('t2s got called', JSON.stringify(req.query, null, 2));
-  res.render('t2s');
-});
-
-router.get('/extract-entities', function(req, res, next) {
-  console.log('extract-entities got called', JSON.stringify(req.query, null, 2));
-  res.render('extract-entities');
+  console.log("Config body", req.body);
+  res.send('Thank you for installing the app!');
 });
 
 module.exports = router;
