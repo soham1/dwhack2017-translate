@@ -1,0 +1,16 @@
+body {
+  padding: 5px;
+}
+
+
+#t2sText{
+  width: 100%;  
+  height: 200px;
+}
+label{
+  color: #262626;
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;  
+}

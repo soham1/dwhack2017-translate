@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  script(src='/javascripts/t2s.js')
+  h1 Text to speech widget
+  form
+    .text-input.inner-div
+      label
+        | Enter text 
+      textarea#t2sText(placeholder='Some text that you want to convert to speech', name='#t2sText')  
+    .text-input.inner-div
+      input#sayItBtn(type='submit', value='Speech it!')
+      input#downloadBtn(type='reset', value='Download')
+
+
