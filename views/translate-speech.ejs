@@ -1,7 +1,37 @@
 <script src="/javascripts/flock.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
-<script>
 
-</script>
+<form action="/flock/audio" method="get">
+    <select name="languages">
+      <option value="de-DE_BirgitVoice">German - Birigit</option>
+      <option value="de-DE_DieterVoice">German - Dieter</option>
+      <option value="en-GB_KateVoice">British English - Kate</option>
+      <option value="en-US_AllisonVoice">American English - Allison</option>
+      <option value="en-US_LisaVoice">American English - Lisa</option>
+      <option value="en-US_MichaelVoice">American English - Michael</option>
+      <option value="es-ES_LauraVoice">Spanish (Spain) - Laura</option>
+      <option value="es-ES_EnriqueVoice">Spanish (Spain) - Enrique</option>
+      <option value="es-LA_SofiaVoice">Spanish (Latin America) - Sofia</option>
+      <option value="es-US_SofiaVoice">Spanish (United States) - Sofia</option>
+      <option value="fr-FR_ReneeVoice">French - Renee</option>
+      <option value="it-IT_FrancescaVoice">Italian - Francesca</option>
+      <option value="pt-BR_IsabelaVoice">Portuguese - Isabela</option>
+    </select>
+    <input type="hidden" name="text" value="<%=text%>"/><br>
+    <input type="radio" name="download" value="true">Download<br>
+    <input type="radio" name="download" value="false">Play<br>
+    <button id="go" type="submit">Go</button>
 
-<%=message%>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+

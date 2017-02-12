@@ -9,7 +9,6 @@ function getUserInstallEventData(userId) {
 }
 
 router.get('/speech', function(req, res, next) {
-  console.log("Request Query", req.query);
   var token = getUserInstallEventData(res.locals.eventTokenPayload.userId).userToken;
   var messageUid = JSON.parse(req.query.flockEvent).messageUids.messageUid;
   console.log("token", token);
@@ -18,20 +17,23 @@ router.get('/speech', function(req, res, next) {
     chat: JSON.parse(req.query.flockEvent).chat,
     uids: [messageUid]
   }, function(error, response) {
-    if (!error) {
-      console.log("TEXT FOUND", response[0].text);
+    if (error) {
+      console.log("ERROR");
+    } else {
+      res.render("translate-speech.ejs", {text: response[0].text});
+    }  
+  });
+});
 
+router.get('/audio', function(req, res, next){
+  console.log("Form BODY", req.query);
 
-
-     
-      var speechParam =  { text: response[0].text, voice: 'es-ES_EnriqueVoice', action: '' };
+      var speechParam =  { text: req.query.text, voice: req.query.languages, action: '' };
       console.log(speechParam);
       const transcript = req.watson.textToSpeech.synthesize(speechParam);
       transcript.on('response', function(response){
-        //if (req.query.download) {
         console.log("IN RESPONSE");
-        if (false) {
-          console.log("IN TRUE");
+        if (req.query.download == "true") {
           if (req.query.accept && req.query.accept === 'audio/wav') {
             console.log("ON TOP");
             response.headers['content-disposition'] = 'attachment; filename=transcript.wav';
@@ -44,21 +46,7 @@ router.get('/speech', function(req, res, next) {
       });
       transcript.on('error', next);
       transcript.pipe(res);
-
-
-
-
-
-//      res.render("translate-speech.ejs", {
-//        message: response[0].text
-//      });
-    }
-    else {
-      console.log("error", error);
-    }
-  });
-
-});
+    });
 
 router.post('/event', function(req, res, next) {
   console.log("Request body", req.body);
