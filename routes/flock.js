@@ -137,7 +137,7 @@ router.get('/config', function(req, res, next) {
 });
 
 router.get('/translate-widget', function(req, res, next) {
-  res.render("translate-widget.ejs");
+  res.render("translate-widget.ejs", {"userId": res.locals.eventTokenPayload.userId, "chat": JSON.parse(req.query.flockEvent).chat});
 });
 
 router.post('/translate-widget', function(req, res, next) {
@@ -155,12 +155,25 @@ router.post('/translate-widget', function(req, res, next) {
       });
     }
     else {
-      console.log(req.flock);
+      //var locals = JSON.parse(req.body.locals);
+      var userId = req.body.userId;
       res.render("translate-response.ejs", {
-        "text": models.translations[0].translation
+        "text": models.translations[0].translation,
+        "token": getUserInstallEventData(userId).userToken,
+        "chat": req.body.chat
       });
     }
   });
 });
 
+router.post('/send', function(req, res, next) {
+   req.flock.callMethod('chat.sendMessage', req.body.token, {
+     to: req.body.chat,
+     text: req.body.text
+    }, function(error, response) {
+      if (!error) {
+      }
+   });
+
+});
 module.exports = router;

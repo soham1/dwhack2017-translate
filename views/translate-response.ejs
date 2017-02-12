@@ -1,10 +1,18 @@
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js"></script>
-<script src="/javascripts/flock.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="//apps-static.flock.co/js-sdk/0.1.0/flock.js"></script>
 <script>
     $(function(){
        $("#send").on("click", function(e){
            console.log("Clicked button");
-           flock.close(); 
+           var token = "<%=token%>";
+           var chat = "<%=chat%>";
+           var text = "<%=text%>";
+           flock.close();
+           $.ajax({
+            url: '/flock/send',
+            type: 'POST',
+            data: {token: token, chat: chat, text:text}
+           });  
        });
     })
 </script>
